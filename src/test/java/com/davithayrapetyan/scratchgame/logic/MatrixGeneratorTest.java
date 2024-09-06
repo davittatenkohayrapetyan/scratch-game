@@ -52,12 +52,22 @@ class MatrixGeneratorTest {
 
     @Test
     void testStandardSymbolGeneration() {
+        // Set bonus symbol probabilities to 0 specifically for this test
+        config.getProbabilities().getBonusSymbols().setSymbols(Map.of("10x", 0, "5x", 0, "+1000", 0, "+500", 0, "MISS", 0));
+
+        // Generate the matrix
         List<List<String>> matrix = MatrixGenerator.generateMatrix(config);
+
+        // Set of valid standard symbols (only "A", "B", "C", and "MISS")
+        Set<String> validSymbols = new HashSet<>(Arrays.asList("A", "B", "C", "MISS"));
+
+        // Check if each generated symbol is within the set of valid standard symbols
         matrix.forEach(row -> row.forEach(symbol -> {
-            assertTrue(symbol.equals("A") || symbol.equals("B") || symbol.equals("C") || symbol.equals("MISS"),
-                    "Symbol should be one of the standard symbols or 'MISS'");
+            assertTrue(validSymbols.contains(symbol),
+                    "Symbol should be one of the standard symbols or 'MISS', but got: " + symbol);
         }));
     }
+
 
     @Test
     void testBonusSymbolPlacement() {

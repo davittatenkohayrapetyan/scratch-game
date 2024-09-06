@@ -7,12 +7,7 @@ import com.davithayrapetyan.scratchgame.logic.GameRunner;
 
 import java.util.Arrays;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
+public class App {
     public static void main(String[] args) {
         if (args.length != 4) {
             System.out.println("Number of args:" + args.length);
@@ -30,6 +25,9 @@ public class App
 
             // Print the result in JSON format (you can use Jackson or manually format it)
             System.out.println(result);
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println("Configuration file not found: " + configPath);
+            System.out.println("Usage: java -jar <your-jar-file>.jar --config <config-file> --betting-amount <amount>");
         } catch (Exception e) {
             e.printStackTrace();
         }

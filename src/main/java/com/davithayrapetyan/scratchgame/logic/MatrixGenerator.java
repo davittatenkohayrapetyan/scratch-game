@@ -63,7 +63,16 @@ public class MatrixGenerator {
     protected static String generateBonusSymbol(GameConfig config) {
         BonusSymbolProbability bonusSymbols = config.getProbabilities().getBonusSymbols();
         Map<String, Integer> symbols = bonusSymbols.getSymbols();
+
+        // Calculate total probability
         int totalProbability = symbols.values().stream().mapToInt(Integer::intValue).sum();
+
+        // If total probability is 0, return "MISS"
+        if (totalProbability == 0) {
+            return "MISS";
+        }
+
+        // Generate a random number within the range of total probability
         int random = new Random().nextInt(totalProbability);
 
         int cumulativeProbability = 0;
@@ -76,4 +85,5 @@ public class MatrixGenerator {
 
         return "MISS";
     }
+
 }
